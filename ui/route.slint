@@ -1,0 +1,17 @@
+export struct Route {
+    title: string,
+    icon: image,
+    path: string}
+    
+export global Routes {
+    out property <[Route]> routes: [
+        {
+            title: "Home",
+            icon: @image-url("../icons/tabler--home-filled.svg"),
+        },
+        {
+            title: "Settings",
+            icon: @image-url("../icons/tabler--settings-filled.svg"),
+        }
+    ];
+}
