@@ -1,6 +1,12 @@
 import { VerticalBox } from "std-widgets.slint";
+import { PosterItem } from "../widgets/poster_item.slint";
 export component LibraryPage inherits VerticalBox {
     Text {
         text: "TODO: Library";
+    }
+
+    PosterItem {
+        poster: @image-url("../../demo.webp");
+        title: "The 100";
     }
 }
