@@ -6,6 +6,7 @@ import { SettingsPage } from "pages/settings.slint";
 import { LibraryPage } from "pages/library.slint";
 
 export component AppWindow inherits Window {
+    title: "BeWatch";
     in-out property <int> counter: 42;
     callback request-increase-value();
     HorizontalBox {
