@@ -4,13 +4,21 @@ export struct Route {
     path: string}
     
 export global Routes {
+    in-out property <string> currPath: "/";
     out property <[Route]> routes: [
         {
             title: "Home",
+            path: "/",
             icon: @image-url("../icons/tabler--home-filled.svg"),
         },
         {
+            title: "Library",
+            path: "/library",
+            icon: @image-url("../icons/tabler--library-filled.svg"),
+        },
+        {
             title: "Settings",
+            path: "/settings",
             icon: @image-url("../icons/tabler--settings-filled.svg"),
         }
     ];

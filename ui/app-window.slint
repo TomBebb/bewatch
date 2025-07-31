@@ -1,18 +1,19 @@
-import { Button, VerticalBox, CheckBox } from "std-widgets.slint";
+import { Button, VerticalBox, CheckBox, HorizontalBox } from "std-widgets.slint";
+import { NavMenu } from "menu.slint";
+import { Routes } from "route.slint";
+import { HomePage } from "pages/home.slint";
+import { SettingsPage } from "pages/settings.slint";
+import { LibraryPage } from "pages/library.slint";
 
 export component AppWindow inherits Window {
     in-out property <int> counter: 42;
     callback request-increase-value();
-    VerticalBox {
-        Text {
-            text: "Counter: \{root.counter}";
-        }
+    HorizontalBox {
 
-        Button {
-            text: "Increase value";
-            clicked => {
-                root.request-increase-value();
-            }
-        }
+        NavMenu { }
+
+        if Routes.currPath == "/": HomePage { }
+        if Routes.currPath == "/library": LibraryPage { }
+        if Routes.currPath == "/settings": SettingsPage { }
     }
 }

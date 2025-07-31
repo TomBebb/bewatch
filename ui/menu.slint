@@ -1,0 +1,25 @@
+import { VerticalBox, Button, Palette } from "std-widgets.slint";
+import { Routes } from "./route.slint";
+
+
+export component NavMenu inherits Rectangle {
+    border-color: Palette.accent-background;
+    border-width: 2px;
+    min-width: 60px;
+    max-width: 70px;
+
+    VerticalBox {
+        alignment: LayoutAlignment.start;
+        spacing: 6px;
+
+        for route in Routes.routes: Button {
+            padding: 2px;
+            icon: route.icon;
+            enabled: Routes.currPath != route.path;
+            clicked => {
+                debug("clicked");
+                Routes.currPath = route.path;
+            }
+        }
+    }
+}
