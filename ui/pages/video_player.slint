@@ -1,0 +1,63 @@
+import { Palette, VerticalBox, HorizontalBox, StandardButton, Button, ProgressIndicator } from "std-widgets.slint";
+export component VideoPlayer inherits FocusScope {
+    in-out property <image> curr;
+    in property <int> durationMs: 1000 * 60 * 124;
+    property <int> durationSecs: durationMs / 1000;
+    property <int> durationMins: durationSecs / 60;
+    property <int> durationHours: durationMins / 60;
+
+    in-out property <int> positionMs: 1000 * 60 * 12;
+    property <int> positionSecs: positionMs / 1000;
+    property <int> positionMins: positionSecs / 60;
+    property <int> positionHours: positionMins / 60;
+    in-out property <bool> playing: true;
+
+    key-pressed(event) => {
+        debug(event.text);
+        accept
+    }
+    HorizontalBox {
+
+        Image {
+            source: curr;
+        }
+
+        Rectangle {
+            background: Palette.alternate-background;
+            border-color: Palette.alternate-foreground;
+            border-radius: 2px;
+
+            box := HorizontalBox {
+                spacing: 3px;
+                if playing:  Button {
+                    icon: @image-url("../../icons/tabler--player-pause-filled.svg");
+                    clicked => {
+                        playing = false
+                    }
+                }
+                if !playing:  Button {
+                    icon: @image-url("../../icons/tabler--player-play-filled.svg");
+                    clicked => {
+                        playing = true
+                    }
+                }
+                area := TouchArea {
+                    progress := ProgressIndicator {
+                        width: box.width - 5px;
+                        indeterminate: false;
+                        progress: positionMs / durationMs;
+                    }
+
+                    pointer-event(event) => {
+                        if (event.kind == PointerEventKind.down || event.kind == PointerEventKind.up) {
+                            positionMs = (area.mouse-x * durationMs) / area.width;
+                        }
+                    }
+                    clicked => {
+                        debug("change position");
+                    }
+                }
+            }
+        }
+    }
+}

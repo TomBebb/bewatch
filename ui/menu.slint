@@ -13,7 +13,6 @@ export component NavMenu inherits Rectangle {
         spacing: 6px;
 
         for route in Routes.routes: Button {
-            padding: 2px;
             icon: route.icon;
             enabled: Routes.currPath != route.path;
             clicked => {

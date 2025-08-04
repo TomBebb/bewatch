@@ -1,20 +1,48 @@
-import { Palette, VerticalBox } from "std-widgets.slint";
-export component PosterItem inherits Rectangle {
-    background: Palette.alternate-background;
+import { Palette, VerticalBox, Button } from "std-widgets.slint";
+export component PosterItem inherits FocusScope {
     in property <image> poster;
     in property <string> title;
+    in-out property <bool> focused;
+    callback pressed();
+    focus-gained(reason) => {
+        focused = true;
+        debug("Focused: " + title);
+    }
+    focus-lost(reason) => {
+        focused = false;
+        debug("UnFocused: " + title);
+    }
+    key-pressed(event) => {
+        if (focused && (event.text == " " || event.text == "\n")) {
+            pressed()
+        }
+        accept
+    }
+    Rectangle {
+        background: Palette.alternate-background;
+        border-color: focused ? Palette.alternate-background : Palette.control-foreground;
+        animate border-color { duration: 100ms; }
+        border-width: 2px;
 
-    VerticalBox {
-        spacing: 2px;
-        Image {
-            vertical-alignment: ImageVerticalAlignment.center;
-            source: poster;
+        TouchArea {
+            clicked => {
+                debug("Clicked");
+                pressed();
+            }
         }
 
-        Text {
-            horizontal-alignment: TextHorizontalAlignment.center;
-            vertical-alignment: TextVerticalAlignment.bottom;
-            text: title;
+        VerticalBox {
+            spacing: 2px;
+            Image {
+                vertical-alignment: ImageVerticalAlignment.center;
+                source: poster;
+            }
+
+            Text {
+                horizontal-alignment: TextHorizontalAlignment.center;
+                vertical-alignment: TextVerticalAlignment.bottom;
+                text: title;
+            }
         }
     }
 }
