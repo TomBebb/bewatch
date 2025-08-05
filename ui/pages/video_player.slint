@@ -1,6 +1,18 @@
-import { Palette, VerticalBox, HorizontalBox, StandardButton, Button, ProgressIndicator } from "std-widgets.slint";
-export component VideoPlayer inherits FocusScope {
-    in-out property <image> curr;
+import { Palette, HorizontalBox, Button, ProgressIndicator } from "std-widgets.slint";
+
+export enum LoadState {
+     Fetching,
+     Downloading,
+     Downloaded
+}
+export global CurrentVideo {
+    in-out property <int> name;
+    in-out property <string> url;
+    changed url => {
+        load(url);
+    }
+    callback load(string);
+    in-out property <image> curr: @image-url("../big_buck_bunny.jpg");
     in property <int> durationMs: 1000 * 60 * 124;
     property <int> durationSecs: durationMs / 1000;
     property <int> durationMins: durationSecs / 60;
@@ -11,15 +23,18 @@ export component VideoPlayer inherits FocusScope {
     property <int> positionMins: positionSecs / 60;
     property <int> positionHours: positionMins / 60;
     in-out property <bool> playing: true;
+}
+
+export component VideoPlayer inherits FocusScope {
 
     key-pressed(event) => {
         debug(event.text);
         accept
     }
-    HorizontalBox {
+    VerticalLayout {
 
         Image {
-            source: curr;
+            source: CurrentVideo.curr;
         }
 
         Rectangle {
@@ -29,28 +44,28 @@ export component VideoPlayer inherits FocusScope {
 
             box := HorizontalBox {
                 spacing: 3px;
-                if playing:  Button {
+                if CurrentVideo.playing: Button {
                     icon: @image-url("../../icons/tabler--player-pause-filled.svg");
                     clicked => {
-                        playing = false
+                        CurrentVideo.playing = false
                     }
                 }
-                if !playing:  Button {
+                if !CurrentVideo.playing:  Button {
                     icon: @image-url("../../icons/tabler--player-play-filled.svg");
                     clicked => {
-                        playing = true
+                        CurrentVideo.playing = true
                     }
                 }
                 area := TouchArea {
                     progress := ProgressIndicator {
                         width: box.width - 5px;
                         indeterminate: false;
-                        progress: positionMs / durationMs;
+                        progress: CurrentVideo.positionMs / CurrentVideo.durationMs;
                     }
 
                     pointer-event(event) => {
                         if (event.kind == PointerEventKind.down || event.kind == PointerEventKind.up) {
-                            positionMs = (area.mouse-x * durationMs) / area.width;
+                            CurrentVideo.positionMs = (area.mouse-x * CurrentVideo.durationMs) / area.width;
                         }
                     }
                     clicked => {

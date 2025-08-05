@@ -56,6 +56,10 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let settings = ui.global::<Settings>();
 
+    ui.global::<CurrentVideo>()
+        .on_load(|url| println!("Load URL: {}", url));
+
+    ui.global::<CurrentVideo>().set_url("https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/1080/Big_Buck_Bunny_1080_10s_10MB.mp4".into());
     println!("Settings: {:?}", settings.get_value());
     settings.on_change(move |settings| {
         println!("OnChange: {:?}", settings);
