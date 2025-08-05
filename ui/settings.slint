@@ -1,6 +1,8 @@
+@rust-attr( derive(bincode::Encode, bincode::Decode))
 export struct PlaybackSettings  {
     subtitleIndex: int, audioIndex: int, autoPlayNext: bool}
 
+@rust-attr( derive(bincode::Encode, bincode::Decode))
 export struct MySettings {
     playback: PlaybackSettings}
 
