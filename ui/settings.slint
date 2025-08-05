@@ -1,4 +1,11 @@
 export struct PlaybackSettings  {
-    subtitle: string, audio: string}
+    subtitleIndex: int, audioIndex: int, autoPlayNext: bool}
 
-    export struct Settings  {playback: PlaybackSettings}
+export struct MySettings {
+    playback: PlaybackSettings}
+
+export global Settings {
+
+    in-out property <MySettings> value;
+    callback change(MySettings);
+}

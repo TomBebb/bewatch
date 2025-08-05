@@ -4,10 +4,8 @@
 use std::error::Error;
 
 slint::include_modules!();
-
 fn main() -> Result<(), Box<dyn Error>> {
     let ui = AppWindow::new()?;
-
     ui.on_request_increase_value({
         let ui_handle = ui.as_weak();
         move || {
@@ -16,6 +14,10 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     });
 
+    let settings = ui.global::<Settings>();
+
+    println!("Settings: {:?}", settings.get_value());
+    settings.on_change(move |settings| println!("OnChange: {:?}", settings));
     ui.run()?;
 
     Ok(())

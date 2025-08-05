@@ -4,7 +4,8 @@ import { Routes } from "route.slint";
 import { HomePage } from "pages/home.slint";
 import { SettingsPage } from "pages/settings.slint";
 import { LibraryPage } from "pages/library.slint";
-
+import { PlaybackSettings, MySettings, Settings } from "settings.slint";
+export { PlaybackSettings, MySettings, Settings }
 export component AppWindow inherits Window {
     title: "BeWatch";
     in-out property <int> counter: 42;

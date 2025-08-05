@@ -1,4 +1,5 @@
-import { VerticalBox, GridBox, TextEdit, HorizontalBox, ComboBox, CheckBox } from "std-widgets.slint";
+import { VerticalBox, GridBox, TabWidget, TextEdit, HorizontalBox, ComboBox, CheckBox } from "std-widgets.slint";
+import { Settings } from "../settings.slint";
 
 component FormItem inherits GridLayout {
     in property <string> label;
@@ -46,7 +47,13 @@ export component SettingsPage inherits VerticalBox {
             Form {
                 FormItem {
                     label: "Auto-play next";
-                    CheckBox { }
+                    play_next := CheckBox {
+                        checked: Settings.value.playback.autoPlayNext;
+                        changed checked => {
+                            Settings.value.playback.autoPlayNext = play_next.checked;
+                            Settings.change(Settings.value);
+                        }
+                    }
                 }
 
                 FormItem {
@@ -54,6 +61,7 @@ export component SettingsPage inherits VerticalBox {
 
                     ComboBox {
                         model: ["None", "English", "日本語 / Japanese"];
+                        current-index: Settings.value.playback.subtitleIndex;
                     }
                 }
 
@@ -62,15 +70,12 @@ export component SettingsPage inherits VerticalBox {
 
                     ComboBox {
                         model: ["English", "日本語 / Japanese"];
+                        current-index: Settings.value.playback.audioIndex;
                     }
                 }
 
                 FormItem {
-                    label: "Only show subtitles ";
-
-                    ComboBox {
-                        model: ["None", "English", "日本語 / Japanese"];
-                    }
+                    label: "Only show subtitles on audio mismatch";
                 }
             }
         }
