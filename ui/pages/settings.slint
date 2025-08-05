@@ -1,6 +1,72 @@
-import { VerticalBox } from "std-widgets.slint";
-export component SettingsPage inherits VerticalBox {
+import { VerticalBox, TabWidget, GridBox, TextEdit, HorizontalBox, ComboBox, ComboBox } from "std-widgets.slint";
+
+component FormItem inherits GridLayout {
+    in property <string> label;
+    spacing-horizontal: 20px;
+
     Text {
-        text: "TODO: Settings";
+        colspan: 5;
+        text: label;
+        horizontal-alignment: right;
+        vertical-alignment: center;
+    }
+
+    HorizontalLayout {
+        colspan: 8;
+        col: 5;
+        @children
+    }
+}
+
+component Form inherits VerticalBox {
+    spacing: 5px;
+    height: 90px;
+}
+
+export component SettingsPage inherits VerticalBox {
+    TabWidget {
+        Tab {
+            title: "General";
+            Form {
+                FormItem {
+                    label: "Demo 1";
+                    TextEdit { }
+                }
+
+                FormItem {
+                    label: "Demo 2";
+                    TextEdit { }
+                }
+            }
+        }
+
+        Tab {
+            title: "Playback";
+
+            Form {
+                FormItem {
+                    label: "Default subtitle language";
+
+                    ComboBox {
+                        model: ["None", "English"];
+                    }
+                }
+            }
+        }
+
+        Tab {
+            title: "Appearance";
+        }
+
+        Tab {
+            title: "Metadata";
+
+            Form {
+                FormItem {
+                    label: "Demo";
+                    TextEdit { }
+                }
+            }
+        }
     }
 }
