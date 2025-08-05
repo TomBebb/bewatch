@@ -47,10 +47,10 @@ export component SettingsPage inherits VerticalBox {
             Form {
                 FormItem {
                     label: "Auto-play next";
-                    play_next := CheckBox {
+                    CheckBox {
                         checked: Settings.value.playback.autoPlayNext;
                         changed checked => {
-                            Settings.value.playback.autoPlayNext = play_next.checked;
+                            Settings.value.playback.autoPlayNext = self.checked;
                             Settings.change(Settings.value);
                         }
                     }
@@ -62,6 +62,10 @@ export component SettingsPage inherits VerticalBox {
                     ComboBox {
                         model: ["None", "English", "日本語 / Japanese"];
                         current-index: Settings.value.playback.subtitleIndex;
+                        changed current-index => {
+                            Settings.value.playback.subtitleIndex = self.current-index;
+                            Settings.change(Settings.value);
+                        }
                     }
                 }
 
@@ -71,6 +75,10 @@ export component SettingsPage inherits VerticalBox {
                     ComboBox {
                         model: ["English", "日本語 / Japanese"];
                         current-index: Settings.value.playback.audioIndex;
+                        changed current-index => {
+                            Settings.value.playback.audioIndex = self.current-index;
+                            Settings.change(Settings.value);
+                        }
                     }
                 }
 
