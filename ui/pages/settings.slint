@@ -1,19 +1,19 @@
-import { VerticalBox, TabWidget, GridBox, TextEdit, HorizontalBox, ComboBox, ComboBox } from "std-widgets.slint";
+import { VerticalBox, GridBox, TextEdit, HorizontalBox, ComboBox, CheckBox } from "std-widgets.slint";
 
 component FormItem inherits GridLayout {
     in property <string> label;
     spacing-horizontal: 20px;
 
     Text {
-        colspan: 5;
+        colspan: 8;
         text: label;
         horizontal-alignment: right;
         vertical-alignment: center;
     }
 
     HorizontalLayout {
-        colspan: 8;
-        col: 5;
+        colspan: 10;
+        col: 8;
         @children
     }
 }
@@ -45,10 +45,31 @@ export component SettingsPage inherits VerticalBox {
 
             Form {
                 FormItem {
+                    label: "Auto-play next";
+                    CheckBox { }
+                }
+
+                FormItem {
                     label: "Default subtitle language";
 
                     ComboBox {
-                        model: ["None", "English"];
+                        model: ["None", "English", "日本語 / Japanese"];
+                    }
+                }
+
+                FormItem {
+                    label: "Default audio language";
+
+                    ComboBox {
+                        model: ["English", "日本語 / Japanese"];
+                    }
+                }
+
+                FormItem {
+                    label: "Only show subtitles ";
+
+                    ComboBox {
+                        model: ["None", "English", "日本語 / Japanese"];
                     }
                 }
             }
